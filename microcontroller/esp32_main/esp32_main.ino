@@ -4,8 +4,7 @@
 #include <Adafruit_SSD1306.h>
 
 #include "MAX30105.h"
-#include "heartRate.h"
-#include "bpm_sensor.h"
+#include "pulse_oximeter_sensor.h"
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
@@ -36,6 +35,32 @@ void setup() {
      Serial.println(F("MAX30102 was not found. Please check wiring/power. "));
   }
 
+  configure_display();
+  configure_max3010x_sensor();
+  configure_spo2_measuring_variables();
+}
+
+void loop() {
+  print_on_display();
+
+  long irValue = particleSensor.getIR();
+
+  if (validSPO2 == 0 || heartRate == 0) {
+    process_spo2(particleSensor);    
+  }
+
+//  if (irValue < 50000)
+//    Serial.println(" No finger?");
+}
+
+void configure_max3010x_sensor() {
+  // Configure sensor with default settings
+  particleSensor.setup();
+  particleSensor.setPulseAmplitudeRed(0x0A);
+  particleSensor.setPulseAmplitudeGreen(0);
+}
+
+void configure_display() {
   display.display();
   display.clearDisplay();
 
@@ -46,35 +71,44 @@ void setup() {
   display.display();
   display.setTextSize(2);
   display.clearDisplay();
+}
 
-  // Configure sensor with default settings
-  particleSensor.setup();
-  particleSensor.setPulseAmplitudeRed(0x0A);
-  particleSensor.setPulseAmplitudeGreen(0);
-  
+void configure_spo2_measuring_variables() {
+  byte ledBrightness = 60; //Options: 0=Off to 255=50mA
+  byte sampleAverage = 4; //Options: 1, 2, 4, 8, 16, 32
+  byte ledMode = 2; //Options: 1 = Red only, 2 = Red + IR, 3 = Red + IR + Green
+  byte sampleRate = 100; //Options: 50, 100, 200, 400, 800, 1000, 1600, 3200
+  int pulseWidth = 411; //Options: 69, 118, 215, 411
+  int adcRange = 4096; //Options: 2048, 4096, 8192, 16384
+
+  //Configure sensor with these settings
+  particleSensor.setup(ledBrightness, sampleAverage, ledMode, sampleRate, pulseWidth, adcRange);
+}
+
+void print_spo2() {
+  display.setCursor(0, 10);
+  display.print(F("%SPO2: "));
+
+  if (validSPO2 == 1) {
+    display.print(spo2);
+  }
 }
 
 void print_bpm() {
-  display.clearDisplay();
   display.setCursor(0, 50);
   display.print(F("BPM: "));
 
-  if (beatAvg != 0) {
-    display.print(beatAvg);
+  if (validHeartRate == 1) {
+    display.print(heartRate);
   }
   
-  display.display();
 }
 
-void loop() {
-  // put your main code here, to run repeatedly
+void print_on_display() {
+  display.clearDisplay();
 
+  print_spo2();
   print_bpm();
 
-  long irValue = particleSensor.getIR();
-
-  process_bpm(irValue);
-
-//  if (irValue < 50000)
-//    Serial.println(" No finger?");
+  display.display();
 }
