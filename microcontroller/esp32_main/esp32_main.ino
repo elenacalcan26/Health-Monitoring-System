@@ -5,6 +5,7 @@
 
 #include "MAX30105.h"
 #include "pulse_oximeter_sensor.h"
+#include "wifi_connector.h"
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
@@ -23,6 +24,9 @@ MAX30105 particleSensor;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
+
+  configure_network();
+  
   Serial.println(F("Initializing..."));
 
  if (!display.begin(SSD1306_SWITCHCAPVCC)) {
