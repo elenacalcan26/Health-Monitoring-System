@@ -1,13 +1,16 @@
 import paho.mqtt.client as mqtt
 import time
 
+MQTT_BROKER = "broker.hivemq.com"
+TOPIC = "monitoring/devices/#"
+
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}", flush=True)
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe("#")
+    client.subscribe(TOPIC)
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
@@ -22,7 +25,7 @@ def main():
     client.on_connect = on_connect
     client.on_message = on_message
 
-    client.connect("mqtt-broker", 1883)
+    client.connect(MQTT_BROKER, 1883)
     client.loop_forever()
 
 if __name__ == '__main__':

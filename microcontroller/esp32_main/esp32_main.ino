@@ -6,6 +6,7 @@
 #include "MAX30105.h"
 #include "pulse_oximeter_sensor.h"
 #include "wifi_connector.h"
+#include "mqtt_publisher.h"
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
@@ -21,11 +22,14 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT,
 
 MAX30105 particleSensor;
 
+int test1 = 5;
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
 
   configure_network();
+  configure_mqtt_connection();
   
   Serial.println(F("Initializing..."));
 
@@ -48,13 +52,18 @@ void loop() {
   print_on_display();
 
   long irValue = particleSensor.getIR();
+  client.loop();
 
-  if (validSPO2 == 0 || heartRate == 0) {
+  if (validSPO2 == 0 || validHeartRate == 0) {
     process_spo2(particleSensor);    
   }
 
-//  if (irValue < 50000)
-//    Serial.println(" No finger?");
+  if (irValue < 50000 && validSPO2 == 1 && validHeartRate == 1 && test1 > 0) {
+   Serial.print(irValue);
+   Serial.println(" => Send measurements");
+   publish_values(spo2, heartRate); 
+   test1 = test1 - 1;
+  }
 }
 
 void configure_max3010x_sensor() {

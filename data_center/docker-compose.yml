@@ -1,24 +1,9 @@
 version: '3'
 
 services:
-  mqtt-broker:
-    image: eclipse-mosquitto:1.5
-    ports:
-      - 1883:1883
-    networks:
-      - mqtt-network
-    restart: always
-    volumes:
-      - ./mqtt/mosquitto/mosquitto.conf:/mosquitto/conf/mosquitto.conf
-
   mqtt-subscriber:
-    image: mqtt-subscriber
-    depends_on:
-      - mqtt-broker
+    image: testapp
     build: ./mqtt/sensor_subscriber
-    networks:
-      - mqtt-network
     restart: always
-
-networks:
-  mqtt-network:
+    ports:
+      - "8888:5000"
