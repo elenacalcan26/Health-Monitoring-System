@@ -7,3 +7,24 @@ services:
     restart: always
     ports:
       - "8888:5000"
+    depends_on:
+      - influxdb
+    networks:
+      - influx-subscriber-network
+
+  influxdb:
+    image: influxdb:1.8
+    restart: always
+    ports:
+      - 8086:8086
+    networks:
+      - influx-subscriber-network
+    volumes:
+      - ./influxdb/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+      - influxdb:/var/lib/influxdb
+
+networks:
+  influx-subscriber-network:
+
+volumes:
+  influxdb:
