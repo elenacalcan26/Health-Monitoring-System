@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mqtt-subscriber:
-    image: testapp
+    image: mqtt-subscriber
     build: ./mqtt/sensor_subscriber
     restart: always
     ports:
