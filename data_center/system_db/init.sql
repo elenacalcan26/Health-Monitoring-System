@@ -34,12 +34,12 @@ CREATE TABLE IF NOT EXISTS HospitalDepartments
 CREATE TABLE IF NOT EXISTS Doctors
 (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    cnp INTEGER(13) NOT NULL,
+    cnp VARCHAR(13) NOT NULL,
     first_name NVARCHAR(30) NOT NULL,
     last_name NVARCHAR(30) NOT NULL,
     phone INTEGER,
-    work_mail VARCHAR(30) NOT NULL,
-    specialization VARCHAR(10) NOT NULL,
+    work_mail VARCHAR(50) NOT NULL,
+    specialization VARCHAR(30) NOT NULL,
     department_id INTEGER,
 
     CONSTRAINT uk_cnp UNIQUE (cnp),
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS PeopleAddresses
 CREATE TABLE IF NOT EXISTS People
 (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    cnp INTEGER(13) NOT NULL,
+    cnp VARCHAR(13) NOT NULL,
     first_name NVARCHAR(30),
     last_name NVARCHAR(30),
     birth_date DATE,
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS Devices
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     device_name VARCHAR(20),
     type VARCHAR(20),
-    mac VARCHAR(12),
+    mac VARCHAR(20),
 
     CONSTRAINT uk_device UNIQUE(device_name, mac)
 );

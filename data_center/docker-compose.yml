@@ -28,6 +28,7 @@ services:
     restart: always
     volumes:
       - ./system_db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./system_db/populate_database.sql:/docker-entrypoint-initdb.d/populate_database.sql
     networks:
       - mysql-gui
     environment:
