@@ -23,8 +23,27 @@ services:
       - ./influxdb/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
       - influxdb:/var/lib/influxdb
 
+  mysql:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - ./system_db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - mysql-gui
+    environment:
+      MYSQL_DATABASE: HealthSystemDB
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - mysql-gui
+
 networks:
   influx-subscriber-network:
+  mysql-gui:
 
 volumes:
   influxdb:
