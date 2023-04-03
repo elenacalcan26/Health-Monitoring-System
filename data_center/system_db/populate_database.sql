@@ -23,12 +23,12 @@ VALUES
     ('Pediatrie', 4);
 
 -- Doctors
-INSERT INTO Doctors (cnp, first_name, last_name, phone, work_mail, specialization, department_id)
+INSERT INTO Doctors (username, cnp, first_name, last_name, phone, work_mail, specialization, department_id)
 VALUES
-    ('1234567890123', 'Maria', 'Popescu', 0123456789, 'mariapopescu@spitalulbucuresti.ro', 'Cardiologie', 1),
-    ('2345678901234', 'Ion', 'Ionescu', 0234567890, 'ionionescu@spitalulcluj.ro', 'Neurologie', 3),
-    ('3456789012345', 'Andrei', 'Georgescu', 0345678901, 'andreigeorgescu@spitaluliasi.ro', 'Ortopedie', 4),
-    ('4567890123456', 'Diana', 'Pop', 0456789012, 'dianapop@spitalultimisoara.ro', 'Pediatrie', 5);
+    ('mariapopescu', '1234567890123', 'Maria', 'Popescu', 0123456789, 'mariapopescu@spitalulbucuresti.ro', 'Cardiologie', 1),
+    ('ionionescu', '2345678901234', 'Ion', 'Ionescu', 0234567890, 'ionionescu@spitalulcluj.ro', 'Neurologie', 3),
+    ('andreigeorgescu', '3456789012345', 'Andrei', 'Georgescu', 0345678901, 'andreigeorgescu@spitaluliasi.ro', 'Ortopedie', 4),
+    ('dianapop', '4567890123456', 'Diana', 'Pop', 0456789012, 'dianapop@spitalultimisoara.ro', 'Pediatrie', 5);
 
 -- People Addresess
 INSERT INTO PeopleAddresses (street_name, number, building, floor, apartment, city, zip_code)
@@ -80,9 +80,9 @@ VALUES
 
 INSERT INTO Patients (person_id, doctor_id, device_id, monitoring_start_date, diagnosis_id, treatment_id)
 VALUES
-    (1, 1, 1, '2022-01-01', 1, 1),
-    (2, 2, 2, '2022-02-01', 2, 2),
-    (3, 2, 3, '2022-03-01', 3, 3);
+    (1, 'ionionescu', 1, '2022-01-01', 1, 1),
+    (2, 'ionionescu', 2, '2022-02-01', 2, 2),
+    (3, 'dianapop', 3, '2022-03-01', 3, 3);
 
 INSERT INTO PatientsAllergies (patient_id, allergen)
 VALUES

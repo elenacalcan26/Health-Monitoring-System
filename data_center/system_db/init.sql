@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS HospitalDepartments
 
 CREATE TABLE IF NOT EXISTS Doctors
 (
-    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(30) NOT NULL PRIMARY KEY,
     cnp VARCHAR(13) NOT NULL,
     first_name NVARCHAR(30) NOT NULL,
     last_name NVARCHAR(30) NOT NULL,
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS Patients
 (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     person_id INTEGER NOT NULL,
-    doctor_id INTEGER NOT NULL,
+    doctor_id VARCHAR(30) NOT NULL,
     device_id INTEGER NOT NULL,
     monitoring_start_date DATE,
     diagnosis_id INTEGER NOT NULL,
@@ -135,6 +135,8 @@ CREATE TABLE IF NOT EXISTS Patients
     CONSTRAINT uk_person_device UNIQUE(person_id, device_id),
     CONSTRAINT fk_person_id FOREIGN KEY(person_id)
     REFERENCES People(id),
+    CONSTRAINT fk_doctor_id FOREIGN KEY(doctor_id)
+    REFERENCES Doctors(username),
     CONSTRAINT fk_device_id FOREIGN KEY(device_id)
     REFERENCES Devices(id),
     CONSTRAINT fk_patient_diagnosis_id FOREIGN KEY(diagnosis_id)
