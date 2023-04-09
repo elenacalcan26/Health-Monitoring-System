@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   mqtt-subscriber:
@@ -19,6 +19,7 @@ services:
       - 8086:8086
     networks:
       - influx-subscriber-network
+      - influxdb-rest-network
     volumes:
       - ./influxdb/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
       - influxdb:/var/lib/influxdb
@@ -31,8 +32,26 @@ services:
       - ./system_db/populate_database.sql:/docker-entrypoint-initdb.d/populate_database.sql
     networks:
       - mysql-gui
+      - mysql-rest-network
+    ports:
+      - 3306:3306
     environment:
       MYSQL_DATABASE: HealthSystemDB
+
+  mysql-auth:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - ./system_db/init_auth_db.sql:/docker-entrypoint-initdb.d/init_auth_db.sql
+      - ./system_db/populate_auth_db.sql:/docker-entrypoint-initdb.d/populate_auth_db.sql
+    networks:
+      - mysql-auth-gui
+      - mysql-auth-network
+    environment:
+      MYSQL_DATABASE: AuthDB
+      MYSQL_TCP_PORT: 3307
+    ports:
+      - 3307:3307
 
   adminer:
     image: adminer
@@ -41,10 +60,39 @@ services:
       - 8080:8080
     networks:
       - mysql-gui
+      - mysql-auth-gui
+
+  rest-server:
+    image: rest-server
+    build: ./rest_server
+    restart: always
+    ports:
+      - 6000:6000
+    depends_on:
+      - mysql
+      - influxdb
+    networks:
+      - mysql-rest-network
+      - influxdb-rest-network
+
+  auth-server:
+    image: auth-server
+    build: ./auth_server
+    restart: always
+    ports:
+      - 5000:5000
+    depends_on:
+      - mysql-auth
+    networks:
+      - mysql-auth-network
 
 networks:
   influx-subscriber-network:
   mysql-gui:
+  mysql-rest-network:
+  influxdb-rest-network:
+  mysql-auth-gui:
+  mysql-auth-network:
 
 volumes:
   influxdb:
