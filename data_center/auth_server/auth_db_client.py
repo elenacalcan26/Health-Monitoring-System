@@ -14,11 +14,13 @@ auth_cursor = mysql_auth_client.cursor()
 
 def check_user(username):
     query = f"SELECT * FROM Users WHERE username = '{username}';"
-    print(f"Execute {query}", flush=True)
     auth_cursor.execute(query)
     result = auth_cursor.fetchone()
-    print(f"User is = {result}", flush=True)
     return result
 
 def check_user_passwd(username, password):
-    pass
+    query = f"SELECT password FROM Users WHERE username = '{username}';"
+    auth_cursor.execute(query)
+    result = auth_cursor.fetchone()[0]
+    print(result, flush=True)
+    return password == result
