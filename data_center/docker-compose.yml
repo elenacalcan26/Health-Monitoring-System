@@ -66,6 +66,7 @@ services:
     image: rest-server
     build: ./rest_server
     restart: always
+    container_name: rest-server
     ports:
       - 6000:6000
     depends_on:
@@ -74,17 +75,20 @@ services:
     networks:
       - mysql-rest-network
       - influxdb-rest-network
+      - auth-rest-network
 
   auth-server:
     image: auth-server
     build: ./auth_server
     restart: always
+    container_name: auth-server
     ports:
       - 5000:5000
     depends_on:
       - mysql-auth
     networks:
       - mysql-auth-network
+      - auth-rest-network
 
 networks:
   influx-subscriber-network:
@@ -93,6 +97,7 @@ networks:
   influxdb-rest-network:
   mysql-auth-gui:
   mysql-auth-network:
+  auth-rest-network:
 
 volumes:
   influxdb:
