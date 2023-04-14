@@ -5,8 +5,11 @@ from utils import *
 app = Flask(__name__)
 
 @app.route("/patients/<int:patientId>", methods=["GET"])
-def get_patient_data(patientId):
-    pass
+def get_patient_profile(patientId):
+    # TODO: plz check the response
+    validated_response = validate_req(request=request)
+    patient_profile = get_patient_general_info(patient_id=patientId)
+    return (patient_profile, 200)
 
 @app.route("/patients", methods = ["GET"])
 def get_all_doctor_patients():
