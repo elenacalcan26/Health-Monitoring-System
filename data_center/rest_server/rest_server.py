@@ -17,9 +17,9 @@ def get_doctor_profile():
     validated_response = validate_req(request=request)
 
     current_user = validated_response["username"]
-    print(f"User = {current_user}", flush=True)
+    doc_info = get_doc_info(current_user)
 
-    return "Authorized !"
+    return (doc_info), 200
 
 @app.route('/')
 def test():
