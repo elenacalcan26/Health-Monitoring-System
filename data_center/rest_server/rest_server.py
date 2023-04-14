@@ -1,8 +1,16 @@
 from flask import Flask, request, jsonify
 from db_client import *
 from utils import *
+from influxdb_client import *
 
 app = Flask(__name__)
+
+@app.route("/patients/<int:patientId>/measurements", methods=["GET"])
+def get_patient_all_measurements(patientId):
+    validated_response = validate_req(request=request)
+    patient_device = get_patient_device(patientId)
+    start_date = get_patient_start_measurement_date(patientId)
+    return "All good!"
 
 @app.route("/patients/<int:patientId>", methods=["GET"])
 def get_patient_profile(patientId):

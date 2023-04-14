@@ -64,3 +64,19 @@ def get_patient_general_info(patient_id):
     result = mysql_db_cursor.fetchone()
     print(f"Patient profile = {result}", flush=True)
     return result
+
+def get_patient_start_measurement_date(patient_id):
+    query = f"""SELECT monitoring_start_date FROM Patients WHERE id = {patient_id}"""
+    mysql_db_cursor.execute(query)
+    result = mysql_db_cursor.fetchone()
+    start_date = result["monitoring_start_date"]
+    print(f"Patient with ID = {patient_id} has started: {start_date}", flush=True)
+    return start_date
+
+def get_patient_device(patient_id):
+    query = f"""SELECT device_id FROM Patients WHERE id =  {patient_id};"""
+    mysql_db_cursor.execute(query)
+    result = mysql_db_cursor.fetchone()
+    device = result["device_id"]
+    print(f"Patient with ID = {patient_id} has device = {device}", flush=True)
+    return device
