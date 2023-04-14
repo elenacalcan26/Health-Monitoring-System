@@ -10,7 +10,11 @@ def get_patient_data(patientId):
 
 @app.route("/patients", methods = ["GET"])
 def get_all_doctor_patients():
-    pass
+    validated_response = validate_req(request=request)
+    current_user = validated_response["username"]
+    patients_list = get_doc_patients(current_user)
+
+    return (patients_list, 200)
 
 @app.route("/profile", methods=["GET"])
 def get_doctor_profile():

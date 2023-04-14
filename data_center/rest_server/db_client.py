@@ -36,3 +36,15 @@ def get_doc_info(username):
     print(f"Selected doc is: {result}", flush=True)
     return result
 
+def get_doc_patients(username):
+    query = f"""SELECT
+                    p.id AS patient_id,
+                    CONCAT(person.first_name, ' ', person.last_name) AS full_name
+                FROM Patients p
+                JOIN People person on person.id = p.person_id
+                WHERE p.doctor_id = '{username}';"""
+
+    mysql_db_cursor.execute(query)
+    result = mysql_db_cursor.fetchall()
+    print(f"Selected patients: {result}", flush=True)
+    return result
