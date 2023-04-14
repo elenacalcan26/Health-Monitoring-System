@@ -80,9 +80,9 @@ VALUES
 
 INSERT INTO Patients (person_id, doctor_id, device_id, monitoring_start_date, diagnosis_id, treatment_id)
 VALUES
-    (1, 'ionionescu', 1, '2022-01-01', 1, 1),
-    (2, 'ionionescu', 2, '2022-02-01', 2, 2),
-    (3, 'dianapop', 3, '2022-03-01', 3, 3);
+    (1, 'ionionescu', 'device-01', '2023-04-01', 1, 1),
+    (2, 'ionionescu', 'device-02', '2022-02-01', 2, 2),
+    (3, 'dianapop', 'device-03', '2022-03-01', 3, 3);
 
 INSERT INTO PatientsAllergies (patient_id, allergen)
 VALUES

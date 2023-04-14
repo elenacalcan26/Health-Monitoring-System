@@ -81,12 +81,11 @@ CREATE TABLE IF NOT EXISTS People
 
 CREATE TABLE IF NOT EXISTS Devices
 (
-    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    device_name VARCHAR(20),
+    device_name VARCHAR(20) NOT NULL PRIMARY KEY,
     type VARCHAR(20),
     mac VARCHAR(20),
 
-    CONSTRAINT uk_device UNIQUE(device_name, mac)
+    CONSTRAINT uk_device_mac UNIQUE(mac)
 );
 
 CREATE TABLE IF NOT EXISTS Diagnoses
@@ -127,7 +126,7 @@ CREATE TABLE IF NOT EXISTS Patients
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     person_id INTEGER NOT NULL,
     doctor_id VARCHAR(30) NOT NULL,
-    device_id INTEGER NOT NULL,
+    device_id VARCHAR(30) NOT NULL,
     monitoring_start_date DATE,
     diagnosis_id INTEGER NOT NULL,
     treatment_id INTEGER NOT NULL,
@@ -138,7 +137,7 @@ CREATE TABLE IF NOT EXISTS Patients
     CONSTRAINT fk_doctor_id FOREIGN KEY(doctor_id)
     REFERENCES Doctors(username),
     CONSTRAINT fk_device_id FOREIGN KEY(device_id)
-    REFERENCES Devices(id),
+    REFERENCES Devices(device_name),
     CONSTRAINT fk_patient_diagnosis_id FOREIGN KEY(diagnosis_id)
     REFERENCES Diagnoses(id),
     CONSTRAINT fk_patient_treatment_id FOREIGN KEY(treatment_id)
