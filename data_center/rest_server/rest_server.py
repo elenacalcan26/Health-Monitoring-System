@@ -10,7 +10,9 @@ def get_patient_all_measurements(patientId):
     validated_response = validate_req(request=request)
     patient_device = get_patient_device(patientId)
     start_date = get_patient_start_measurement_date(patientId)
-    return "All good!"
+    # TODO check not empty
+    result = get_all_measurements(patient_device, start_date)
+    return result, 200
 
 @app.route("/patients/<int:patientId>", methods=["GET"])
 def get_patient_profile(patientId):
