@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HealthMonitoringSystem</string>
+    <string name="usernameLogin">username</string>
+    <string name="passwordLogin">password</string>
+</resources>
