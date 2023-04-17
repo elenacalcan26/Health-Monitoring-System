@@ -1,5 +1,6 @@
 package com.example.healthmonitoringsystem
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -51,6 +52,10 @@ class MainActivity : AppCompatActivity() {
                         val defResp = response.body()
                         val token = defResp?.token
                         Log.d("Login", token.toString())
+
+                        // User logged in => start Main Menu Activity
+                        val intent = Intent(this@MainActivity, MainMenuActivity::class.java)
+                        startActivity(intent)
                     } else {
                         Toast.makeText(
                             this@MainActivity,

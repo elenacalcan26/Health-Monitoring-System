@@ -2,4 +2,6 @@
     <string name="app_name">HealthMonitoringSystem</string>
     <string name="usernameLogin">username</string>
     <string name="passwordLogin">password</string>
+    <string name="view_profile_bttn_text">View Profile</string>
+    <string name="view_patients_bttn_text">View Patients</string>
 </resources>
