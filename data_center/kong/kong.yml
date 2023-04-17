@@ -1,0 +1,24 @@
+_format_version: "2.1"
+
+services:
+  - name: auth-server
+    url: http://auth-server:5000/login
+
+    routes:
+      - name: auth-route
+        paths:
+          - /login
+        methods:
+          - POST
+        service:
+        name: auth-server
+
+  - name: rest-server
+    url: http://rest-server:6000
+
+    routes:
+      - name: rest-route
+        paths:
+          - /
+        methods:
+          - GET

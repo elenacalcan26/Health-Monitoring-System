@@ -67,8 +67,6 @@ services:
     build: ./rest_server
     restart: always
     container_name: rest-server
-    ports:
-      - 6000:6000
     depends_on:
       - mysql
       - influxdb
@@ -76,19 +74,36 @@ services:
       - mysql-rest-network
       - influxdb-rest-network
       - auth-rest-network
+      - internal
 
   auth-server:
     image: auth-server
     build: ./auth_server
     restart: always
     container_name: auth-server
-    ports:
-      - 5000:5000
     depends_on:
       - mysql-auth
     networks:
       - mysql-auth-network
       - auth-rest-network
+      - internal
+
+  kong:
+    image: kong:latest
+    volumes:
+      - ./kong:/usr/local/kong/declarative
+    environment:
+      KONG_DATABASE: 'off'
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+    ports:
+      - 8000:8000
+      - 8443:8443
+    networks:
+      - internal
 
 networks:
   influx-subscriber-network:
@@ -98,6 +113,7 @@ networks:
   mysql-auth-gui:
   mysql-auth-network:
   auth-rest-network:
+  internal:
 
 volumes:
   influxdb:

@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {
 
     private val AUTH = "Basic " +  Base64.encodeToString("test:test".toByteArray(), Base64.NO_WRAP) // need to change
-    private const val AUTH_URL = "http://10.0.2.2:5000"
+    private const val AUTH_URL = "http://10.0.2.2:8000"
 
     private val okHttpClient = OkHttpClient.Builder().addInterceptor {
         chain -> val original = chain.request()
