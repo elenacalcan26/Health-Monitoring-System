@@ -8,7 +8,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    private val AUTH = "Basic " +  Base64.encodeToString("test:test".toByteArray(), Base64.NO_WRAP) // need to change
     private const val AUTH_URL = "http://10.0.2.2:8000"
 
     private val okHttpClient = OkHttpClient.Builder().addInterceptor {
@@ -16,8 +15,11 @@ object RetrofitClient {
 
         val requestBuilder = original
             .newBuilder()
-//            .addHeader("Authorization", AUTH) // here auth value
             .method(original.method(), original.body())
+
+        getAuthToken()?.let {
+            token -> requestBuilder.addHeader("Authorization", token)
+        }
 
         val request = requestBuilder.build()
         chain.proceed(request)
@@ -31,5 +33,18 @@ object RetrofitClient {
             .build()
 
         retrofit.create(Api::class.java)
+    }
+
+    private fun getAuthToken(): String? {
+        val jwtToken = HealthMonitoringSystemAndroidApp
+            .instance
+            .sharedPreferences
+            .getString("token", "")
+
+        if (jwtToken != null) {
+            return "Bearer $jwtToken"
+        }
+
+        return null
     }
 }

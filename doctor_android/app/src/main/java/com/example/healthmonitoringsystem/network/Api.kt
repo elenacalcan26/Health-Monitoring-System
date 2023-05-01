@@ -1,9 +1,11 @@
 package com.example.healthmonitoringsystem.network
 
 import com.example.healthmonitoringsystem.models.DefResp
+import com.example.healthmonitoringsystem.models.DocProfileResp
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface Api {
@@ -14,4 +16,7 @@ interface Api {
         @Field("username") username:String,
         @Field("password") password:String,
     ): Call<DefResp>
+
+    @GET("profile")
+    fun getDocProfile(): Call<DocProfileResp>
 }

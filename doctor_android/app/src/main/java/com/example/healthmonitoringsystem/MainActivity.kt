@@ -1,6 +1,7 @@
 package com.example.healthmonitoringsystem
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +20,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var username: EditText
     lateinit var password: EditText
     private lateinit var loginButton: Button
+
+    lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         username = findViewById(R.id.editTextTextPersonName)
         password = findViewById(R.id.editTextTextPassword)
         loginButton = findViewById(R.id.loginButton)
+
+        sharedPreferences = (application as HealthMonitoringSystemAndroidApp).sharedPreferences
 
         loginButton.setOnClickListener {
             login()
@@ -44,7 +50,6 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        // TODO: send http request to confirm the entity
         RetrofitClient.instance.loginUser(usernameText.toString(), passwordText.toString())
             .enqueue(object: Callback<DefResp> {
                 override fun onResponse(call: Call<DefResp>, response: Response<DefResp>) {
@@ -52,6 +57,11 @@ class MainActivity : AppCompatActivity() {
                         val defResp = response.body()
                         val token = defResp?.token
                         Log.d("Login", token.toString())
+
+                        // save jwt token in SharedPreferences as token: "adjlakdj"
+                        var editor = sharedPreferences.edit()
+                        editor.putString("token", token.toString())
+                        editor.commit()
 
                         // User logged in => start Main Menu Activity
                         val intent = Intent(this@MainActivity, MainMenuActivity::class.java)
