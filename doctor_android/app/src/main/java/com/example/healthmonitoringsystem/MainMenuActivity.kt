@@ -1,54 +1,49 @@
 package com.example.healthmonitoringsystem
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.os.Parcelable
 import android.widget.Button
 import android.widget.Toast
-import com.example.healthmonitoringsystem.models.DocProfileResp
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import androidx.lifecycle.ViewModelProvider
+import com.example.healthmonitoringsystem.viewmodel.DocProfileViewModel
+import com.example.healthmonitoringsystem.common.Result
+
 
 class MainMenuActivity : AppCompatActivity() {
     private lateinit var profileButton: Button
+    private lateinit var docProfileViewModel: DocProfileViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
 
         profileButton = findViewById(R.id.profile_button)
 
+        docProfileViewModel = ViewModelProvider(this).get(DocProfileViewModel::class.java)
+
         profileButton.setOnClickListener {
-            getDocProfile()
+            viewProfilePressed()
         }
     }
 
-    fun getDocProfile() {
-        RetrofitClient.instance.getDocProfile().enqueue(
-            object: Callback<DocProfileResp> {
-                override fun onResponse(call: Call<DocProfileResp>, response: Response<DocProfileResp>) {
-                    if (response.isSuccessful) {
-                        val docProfile = response.body()
-                        Log.d("MainMenuViewDocProfile", docProfile.toString())
-                    } else {
-                        Toast.makeText(
-                            this@MainMenuActivity,
-                            "Get profile failed",
-                            Toast.LENGTH_SHORT
-                        ).show()
+    private fun viewProfilePressed() {
+        docProfileViewModel.getDocProfile().observe(
+            this
+        ) { result ->
+            when (result) {
+                is Result.Success -> {
+                    val intent: Intent = Intent(this, DoctorProfileActivity::class.java).apply {
+                        putExtra("docProfile", result.data as Parcelable)
                     }
+
+                    startActivity(intent)
                 }
 
-                override fun onFailure(call: Call<DocProfileResp>, t: Throwable) {
-                    Toast.makeText(
-                        this@MainMenuActivity,
-                        "Get profile failed",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    Log.d("MainMenuViewDocProfile", t.message.toString())
+                is Result.Error -> {
+                    Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
                 }
             }
-        )
+        }
     }
-
 }

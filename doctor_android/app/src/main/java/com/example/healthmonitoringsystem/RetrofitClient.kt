@@ -3,7 +3,6 @@ package com.example.healthmonitoringsystem
 import com.example.healthmonitoringsystem.network.Api
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import android.util.Base64
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
