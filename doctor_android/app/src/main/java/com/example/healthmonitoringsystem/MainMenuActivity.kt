@@ -13,11 +13,13 @@ import com.example.healthmonitoringsystem.common.Result
 import com.example.healthmonitoringsystem.viewmodel.PatientsViewModel
 
 
+
 class MainMenuActivity : AppCompatActivity() {
     private lateinit var profileButton: Button
     private lateinit var patientsButton: Button
     private lateinit var docProfileViewModel: DocProfileViewModel
     private lateinit var patientsListViewModel: PatientsViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
@@ -54,18 +56,28 @@ class MainMenuActivity : AppCompatActivity() {
                 is Result.Error -> {
                     Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
                 }
+
             }
         }
     }
 
     private fun viewPatientsPressed() {
+        Log.d("MainMenuActivity", "viewPatientsPressed() called")
         patientsListViewModel.fetchPatientList()
-        patientsListViewModel.patientList.observe(this) {
-            result -> when (result) {
-                is Result.Success -> Log.d("PatientsList", result.data.toString())
+        patientsListViewModel.patientList.observe(this) { result ->
+            when (result) {
+                is Result.Success -> {
+                    Log.d("PatientsList", result.data.toString())
+                    val intent = Intent(this, PatientsListActivity::class.java).apply {
+                        putParcelableArrayListExtra("patientList", ArrayList(result.data))
+                    }
+                    Log.d("MainMenuActivity", "Before Starting ListPatientsActivity")
+                    startActivity(intent)
+                }
                 is Result.Error -> {
                     Log.d("PatientsList", "Error fetching patient list: ${result.exception.message}")
                 }
+
             }
         }
     }
