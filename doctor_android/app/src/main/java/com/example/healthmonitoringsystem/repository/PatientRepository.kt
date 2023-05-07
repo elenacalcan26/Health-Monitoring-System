@@ -15,6 +15,7 @@ import retrofit2.Response
 class PatientRepository {
     fun getListPatients(): LiveData<Result<List<Patient>>> {
         val result = MutableLiveData<Result<List<Patient>>>()
+
         RetrofitClient.instance.getPatients().enqueue(object : Callback<List<PatientResp>> {
             override fun onResponse(call: Call<List<PatientResp>>, response: Response<List<PatientResp>>) {
                 if (response.isSuccessful) {
