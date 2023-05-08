@@ -2,14 +2,16 @@ package com.example.healthmonitoringsystem
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.healthmonitoringsystem.adapters.OnPatientClickListener
 import com.example.healthmonitoringsystem.adapters.PatientListAdapter
 import com.example.healthmonitoringsystem.entities.Patient
 import java.util.ArrayList
 
-class PatientsListActivity: AppCompatActivity() {
+class PatientsListActivity: AppCompatActivity(), OnPatientClickListener {
 
     private lateinit var patientRecyclerView: RecyclerView
     private lateinit var adapter: PatientListAdapter
@@ -26,6 +28,18 @@ class PatientsListActivity: AppCompatActivity() {
         patientRecyclerView.layoutManager = LinearLayoutManager(this)
 
         adapter = PatientListAdapter(patientList ?: ArrayList())
+        adapter.setOnPatientClickListener(this)
+
         patientRecyclerView.adapter = adapter
+    }
+
+
+    override fun onPatientClick(position: Int) {
+        Log.d("PatientsListActivity", "item pressed $position")
+//        Toast.makeText(
+//            this@PatientsListActivity,
+//            "Clicked position $position",
+//            Toast.LENGTH_SHORT)
+//            .show()
     }
 }
