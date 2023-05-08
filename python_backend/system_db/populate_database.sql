@@ -42,7 +42,7 @@ VALUES
 INSERT INTO People (cnp, first_name, last_name, birth_date, age, gender, phone, email, address_id)
 VALUES
 (1960723123456, 'Maria', 'Popescu', '1996-07-23', 25, 'Feminin', '0721123456', 'maria.popescu@gmail.com', 1),
-(1850409123456, 'Ion', 'Ionescu', '1985-04-09', 36, 'Masculin', '0755123456', 'ion.ionescu@yahoo.com', 2),
+(1850409123456, 'Ion', 'Dragomir', '1985-04-09', 36, 'Masculin', '0755123456', 'ion.dragomir@yahoo.com', 2),
 (1970527123456, 'Ana', 'Dumitru', '1997-05-27', 24, 'Feminin', '0729123456', 'ana.dumitru@hotmail.com', 3),
 (2000116123456, 'Mihai', 'Georgescu', '2000-11-16', 21, 'Masculin', '0767123456', 'mihai.georgescu@gmail.com', 4);
 
