@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.healthmonitoringsystem.entities.Patient
 import com.example.healthmonitoringsystem.repository.PatientRepository
 import com.example.healthmonitoringsystem.common.Result
+import com.example.healthmonitoringsystem.entities.PatientDetails
 
 class PatientsViewModel : ViewModel() {
 
@@ -20,6 +21,10 @@ class PatientsViewModel : ViewModel() {
         patientRepository.getListPatients().observeForever { result ->
             _patientList.value = result
         }
+    }
+
+    fun getPatientDetails(id: Int): LiveData<Result<PatientDetails>> {
+        return patientRepository.getPatientDetails(id)
     }
 
 }

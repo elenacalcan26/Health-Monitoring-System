@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.healthmonitoringsystem.R
 import com.example.healthmonitoringsystem.entities.Patient
 
-class PatientListAdapter(private val patientList: List<Patient>) : RecyclerView.Adapter<PatientListAdapter.PatientViewHolder>() {
+class PatientListAdapter(val patientList: List<Patient>) : RecyclerView.Adapter<PatientListAdapter.PatientViewHolder>() {
 
     private lateinit var onPatientClickListener: OnPatientClickListener
 

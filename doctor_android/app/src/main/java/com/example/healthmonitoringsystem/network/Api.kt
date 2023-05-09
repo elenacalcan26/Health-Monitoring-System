@@ -2,12 +2,10 @@ package com.example.healthmonitoringsystem.network
 
 import com.example.healthmonitoringsystem.models.DefResp
 import com.example.healthmonitoringsystem.models.DocProfileResp
+import com.example.healthmonitoringsystem.models.PatientDetailsResp
 import com.example.healthmonitoringsystem.models.PatientResp
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface Api {
 
@@ -23,4 +21,9 @@ interface Api {
 
     @GET("/patients")
     fun getPatients(): Call<List<PatientResp>>
+
+    @GET("/patients/{id}")
+    fun getPatientDetails(
+        @Path("id") patientId: Int
+    ): Call<PatientDetailsResp>
 }

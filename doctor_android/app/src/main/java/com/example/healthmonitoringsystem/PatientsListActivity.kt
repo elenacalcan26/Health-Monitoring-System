@@ -1,8 +1,8 @@
 package com.example.healthmonitoringsystem
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,11 +35,10 @@ class PatientsListActivity: AppCompatActivity(), OnPatientClickListener {
 
 
     override fun onPatientClick(position: Int) {
-        Log.d("PatientsListActivity", "item pressed $position")
-//        Toast.makeText(
-//            this@PatientsListActivity,
-//            "Clicked position $position",
-//            Toast.LENGTH_SHORT)
-//            .show()
+        val clickedPatient = adapter.patientList[position]
+        Log.d("PatientsListActivity", "item pressed $position & patientId = ${clickedPatient.patient_id}")
+        val intent = Intent(this, PatientProfileActivity::class.java)
+        intent.putExtra("patientId", clickedPatient.patient_id)
+        startActivity(intent)
     }
 }

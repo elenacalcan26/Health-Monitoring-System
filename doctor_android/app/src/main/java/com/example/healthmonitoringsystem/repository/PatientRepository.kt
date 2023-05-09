@@ -6,7 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import com.example.healthmonitoringsystem.RetrofitClient
 import com.example.healthmonitoringsystem.common.Result
 import com.example.healthmonitoringsystem.entities.Patient
+import com.example.healthmonitoringsystem.entities.PatientDetails
 import com.example.healthmonitoringsystem.extensions.toPatient
+import com.example.healthmonitoringsystem.extensions.toPatientDetails
+import com.example.healthmonitoringsystem.models.PatientDetailsResp
 import com.example.healthmonitoringsystem.models.PatientResp
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,4 +40,26 @@ class PatientRepository {
         })
         return result
     }
+
+    fun getPatientDetails(patientId: Int): LiveData<Result<PatientDetails>> {
+        val result = MutableLiveData<Result<PatientDetails>>()
+
+        RetrofitClient.instance.getPatientDetails(patientId).enqueue(object : Callback<PatientDetailsResp> {
+            override fun onResponse(call: Call<PatientDetailsResp>, response: Response<PatientDetailsResp>) {
+                if (response.isSuccessful) {
+                    val patient = response.body()?.toPatientDetails()
+                    Log.d("PatientRepository", patient.toString())
+                    result.value = Result.Success(patient)
+                }
+            }
+
+            override fun onFailure(call: Call<PatientDetailsResp>, t: Throwable) {
+                result.value = Result.Error(Exception("Get patient details failed"))
+                Log.d("PatientRepository", t.message.toString())
+            }
+        })
+
+        return result
+    }
+
 }
