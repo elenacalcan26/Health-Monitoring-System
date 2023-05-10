@@ -2,6 +2,7 @@ package com.example.healthmonitoringsystem
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +29,7 @@ class PatientProfileActivity: AppCompatActivity() {
                 is Result.Success -> {
                     patientDetails = result.data!!
                     Log.d("PatientProfile", patientDetails.toString())
+                    displayPatientInfo(patientDetails)
                 }
 
                 is Result.Error -> {
@@ -36,5 +38,16 @@ class PatientProfileActivity: AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun displayPatientInfo(patientDetails: PatientDetails) {
+        val patientFullName: TextView = findViewById(R.id.patient_full_name)
+        val patientAge: TextView = findViewById(R.id.patient_age)
+        val patientGender: TextView = findViewById(R.id.patient_gender)
+        val patientAssignedDevice: TextView = findViewById(R.id.patient_device)
+        patientFullName.text = "Name: ${patientDetails.full_name}"
+        patientAge.text = "Age: ${patientDetails.age}"
+        patientGender.text = "Gender: ${patientDetails.gender}"
+        patientAssignedDevice.text = "Device: ${patientDetails.device_id}"
     }
 }
