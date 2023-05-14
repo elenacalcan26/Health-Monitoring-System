@@ -8,19 +8,19 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="95dp"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
         android:layout_marginStart="156dp"
         android:layout_marginTop="77dp"
-        android:layout_marginBottom="21dp"
-        app:layout_constraintBottom_toTopOf="@+id/patient_full_name"
+        android:layout_marginBottom="296dp"
+        app:layout_constraintBottom_toTopOf="@+id/patient_measurements_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_user_pic" />
 
     <TextView
         android:id="@+id/patient_full_name"
-        android:layout_width="185dp"
-        android:layout_height="0dp"
+        android:layout_width="184dp"
+        android:layout_height="44dp"
         android:layout_marginBottom="402dp"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,4 +57,17 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/patient_gender" />
+
+    <Button
+        android:id="@+id/patient_measurements_button"
+        android:layout_width="277dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="109dp"
+        android:onClick="viewPatientMeasurements"
+        android:text="View Patient Measurements"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
