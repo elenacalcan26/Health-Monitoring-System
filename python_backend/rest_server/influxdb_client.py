@@ -28,7 +28,7 @@ def get_all_measurements(device_name, start_measurement_date):
     parse_result_set(result, "BPM")
 
     print(f"Final -> {patient_measurements}", flush=True)
-    return patient_measurements
+    return { "measurements": patient_measurements }
 
 def parse_result_set(result_set, measurement):
     for row in result_set.get_points():
