@@ -10,12 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.healthmonitoringsystem.entities.PatientDetails
 import com.example.healthmonitoringsystem.viewmodel.PatientsViewModel
 import com.example.healthmonitoringsystem.common.Result
+import com.example.healthmonitoringsystem.viewmodel.MeasurementsViewModel
 
 class PatientProfileActivity: AppCompatActivity() {
 
     private lateinit var viewModel: PatientsViewModel
     private lateinit var patientDetails: PatientDetails
     private lateinit var measurementsButton: Button
+    private lateinit var measurementsViewModel: MeasurementsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +29,8 @@ class PatientProfileActivity: AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(PatientsViewModel::class.java)
         viewModel.getPatientDetails(patientId)
+
+        measurementsViewModel = ViewModelProvider(this).get(MeasurementsViewModel::class.java)
 
         viewModel.getPatientDetails(patientId).observe(this) { result ->
             when (result) {
@@ -44,7 +48,7 @@ class PatientProfileActivity: AppCompatActivity() {
         }
 
         measurementsButton.setOnClickListener {
-            getPatientMeasurements()
+            getPatientMeasurements(patientId)
         }
     }
 
@@ -59,9 +63,23 @@ class PatientProfileActivity: AppCompatActivity() {
         patientAssignedDevice.text = "Device: ${patientDetails.device_id}"
     }
 
-    fun getPatientMeasurements() {
+    fun getPatientMeasurements(patientId: Int) {
         Log.d("PatientProfileActivity", "Measurements button pressed")
         Toast.makeText(this, "button pressed", Toast.LENGTH_SHORT).show()
-    }
 
+        measurementsViewModel.fetchPatientMeasurements(patientId)
+        measurementsViewModel.measurementsList.observe(this) {result ->
+            when (result) {
+                is Result.Success -> {
+                    Log.d("PatientProfileActivity", result.data.toString())
+                }
+
+                is Result.Error -> {
+                    Log.d(
+                        "PatientMeasurements",
+                        "Error fetching patient measurements: ${result.exception.message}")
+                }
+            }
+        }
+    }
 }
