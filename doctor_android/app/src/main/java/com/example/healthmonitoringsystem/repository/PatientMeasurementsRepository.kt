@@ -22,15 +22,6 @@ class PatientMeasurementsRepository {
                     val monitoredMeasurements = response.body()?.toMonitoredMeasurementsList() ?: emptyList()
                     Log.d("PatientMeasurementsOnResponse", response.body().toString())
                     result.value = Result.Success(monitoredMeasurements)
-
-//                    val measurements = response.body()?.measurements
-//                    measurements?.forEach { (date, values) ->
-//                        Log.d("Date", date)
-//                        values.forEach { (type, value) ->
-//                            Log.d("Measurement", "$type: $value")
-//                        }
-//                    }
-
                 }
             }
 

@@ -1,5 +1,6 @@
 package com.example.healthmonitoringsystem
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -72,6 +73,10 @@ class PatientProfileActivity: AppCompatActivity() {
             when (result) {
                 is Result.Success -> {
                     Log.d("PatientProfileActivity", result.data.toString())
+                    val intent = Intent(this, MeasurementsActivity::class.java).apply {
+                        putParcelableArrayListExtra("measurementsList", ArrayList(result.data))
+                    }
+                    startActivity(intent)
                 }
 
                 is Result.Error -> {
