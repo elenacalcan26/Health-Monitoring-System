@@ -16,6 +16,7 @@ class PatientProfileActivity: AppCompatActivity() {
 
     private lateinit var measurementsButton: Button
     private lateinit var measurementsViewModel: MeasurementsViewModel
+    private lateinit var startMonitoringDate: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +25,7 @@ class PatientProfileActivity: AppCompatActivity() {
         val patientId = intent.getIntExtra("patientId", -1)
         val details = intent.extras?.getParcelable<PatientDetails>("patientDetails")
         displayPatientInfo(details!!)
+        startMonitoringDate = formatDate(details.monitoring_start_date)
 
         measurementsButton = findViewById(R.id.patient_measurements_button)
 
@@ -59,6 +61,7 @@ class PatientProfileActivity: AppCompatActivity() {
                     val intent = result.data?.takeIf { it.isNotEmpty() }?.let { data ->
                         Intent(this, MeasurementsActivity::class.java).apply {
                             putParcelableArrayListExtra("measurementsList", ArrayList(data))
+                            putExtra("monitoringStartDate", startMonitoringDate)
                         }
                     } ?: Intent(this, NoDataMeasuredMessageActivity::class.java)
 
@@ -73,4 +76,11 @@ class PatientProfileActivity: AppCompatActivity() {
             }
         }
     }
+
+    private fun formatDate(monitoringStartDate: String): String {
+        val startIndex = monitoringStartDate.indexOf(",") + 2
+        val endIndex = monitoringStartDate.lastIndexOf(":")
+        return monitoringStartDate.substring(startIndex, endIndex)
+    }
+
 }

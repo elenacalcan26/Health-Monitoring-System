@@ -2,6 +2,7 @@ package com.example.healthmonitoringsystem
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ class MeasurementsActivity: AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MeasurementsAdapter
+    private lateinit var monitoringStartDateTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +24,12 @@ class MeasurementsActivity: AppCompatActivity() {
 
         Log.d("MeasurementsActivity", "start MeasurementsActivity")
 
+        monitoringStartDateTextView = findViewById(R.id.start_monitoring_date)
         recyclerView = findViewById(R.id.measurementsRecyclerView)
         adapter = MeasurementsAdapter(emptyList())
+
+        var startDate = intent.extras?.getString("monitoringStartDate")
+        monitoringStartDateTextView.text = "Monitoring since: $startDate"
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter

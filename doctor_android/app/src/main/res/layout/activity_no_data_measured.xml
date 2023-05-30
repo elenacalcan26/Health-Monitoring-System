@@ -10,7 +10,7 @@
         android:id="@+id/no_measurements"
         android:layout_width="344dp"
         android:layout_height="52dp"
-        android:text="@string/no_data_measured_msg"
+        android:text= "@string/no_data_measured_msg"
         android:textAlignment="center"
         android:textSize="34sp"
         android:textStyle="bold"
