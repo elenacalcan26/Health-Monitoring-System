@@ -79,4 +79,4 @@ def get_patient_device(patient_id):
     result = mysql_db_cursor.fetchone()
     device = result["device_id"]
     print(f"Patient with ID = {patient_id} has device = {device}", flush=True)
-    return device
+    return str(device)
