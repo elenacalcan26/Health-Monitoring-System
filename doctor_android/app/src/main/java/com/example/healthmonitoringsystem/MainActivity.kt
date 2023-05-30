@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                         // save jwt token in SharedPreferences as token: "adjlakdj"
                         var editor = sharedPreferences.edit()
                         editor.putString("token", token.toString())
+                        editor.putString("user", usernameText.toString())
                         editor.commit()
 
                         // User logged in => start Main Menu Activity

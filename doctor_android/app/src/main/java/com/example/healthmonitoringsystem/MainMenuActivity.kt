@@ -1,11 +1,13 @@
 package com.example.healthmonitoringsystem
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.healthmonitoringsystem.viewmodel.DocProfileViewModel
@@ -15,17 +17,26 @@ import com.example.healthmonitoringsystem.viewmodel.PatientsViewModel
 
 
 class MainMenuActivity : AppCompatActivity() {
+    private lateinit var welcomeUserTextView: TextView
     private lateinit var profileButton: Button
     private lateinit var patientsButton: Button
     private lateinit var docProfileViewModel: DocProfileViewModel
     private lateinit var patientsListViewModel: PatientsViewModel
 
+    lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
 
+        welcomeUserTextView = findViewById(R.id.welcome_text)
         profileButton = findViewById(R.id.profile_button)
         patientsButton = findViewById(R.id.patients_button)
+
+        sharedPreferences = (application as HealthMonitoringSystemAndroidApp).sharedPreferences
+
+        var loggedUser = sharedPreferences.getString("user", "")
+        welcomeUserTextView.text = "Welcome, $loggedUser"
 
         docProfileViewModel = ViewModelProvider(this).get(DocProfileViewModel::class.java)
         patientsListViewModel = ViewModelProvider(this).get(PatientsViewModel::class.java)

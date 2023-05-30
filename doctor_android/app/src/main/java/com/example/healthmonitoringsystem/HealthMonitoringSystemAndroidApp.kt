@@ -21,4 +21,4 @@ class HealthMonitoringSystemAndroidApp: Application() {
     init {
         instance = this
     }
-}
+} 
