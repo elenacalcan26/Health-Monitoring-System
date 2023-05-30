@@ -18,6 +18,12 @@ def query_measurement_from_influx(measurement, start_date, device):
     return influxClient.query(query)
 
 def get_all_measurements(device_name, start_measurement_date):
+    global patient_measurements
+
+    if patient_measurements:
+        # clears measurements buffer before every query / api
+        patient_measurements = {}
+
     start_measurement_date = datetime.combine(start_measurement_date, datetime.min.time())
     date_time_iso = start_measurement_date.isoformat() + 'Z'
 
