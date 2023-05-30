@@ -4,4 +4,5 @@
     <string name="passwordLogin">password</string>
     <string name="view_profile_bttn_text">View Profile</string>
     <string name="view_patients_bttn_text">View Patients</string>
+    <string name="no_data_measured_msg">NO DATA MEASURED</string>
 </resources>

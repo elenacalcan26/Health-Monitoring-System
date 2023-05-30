@@ -55,9 +55,13 @@ class PatientProfileActivity: AppCompatActivity() {
             when (result) {
                 is Result.Success -> {
                     Log.d("PatientProfileActivity", result.data.toString())
-                    val intent = Intent(this, MeasurementsActivity::class.java).apply {
-                        putParcelableArrayListExtra("measurementsList", ArrayList(result.data))
-                    }
+
+                    val intent = result.data?.takeIf { it.isNotEmpty() }?.let { data ->
+                        Intent(this, MeasurementsActivity::class.java).apply {
+                            putParcelableArrayListExtra("measurementsList", ArrayList(data))
+                        }
+                    } ?: Intent(this, NoDataMeasuredMessageActivity::class.java)
+
                     startActivity(intent)
                 }
 
