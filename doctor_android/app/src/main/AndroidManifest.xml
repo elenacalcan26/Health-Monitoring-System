@@ -22,6 +22,7 @@
         <activity android:name=".MeasurementsActivity" />
         <activity android:name=".NoDataMeasuredMessageActivity" />
         <activity android:name=".PatientMedicalStatusActivity" />
+        <activity android:name=".MeasurementsChartActivity" />
         <activity
             android:name=".MainMenuActivity"
             android:exported="false" />

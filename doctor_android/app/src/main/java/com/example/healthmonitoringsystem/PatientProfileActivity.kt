@@ -17,6 +17,7 @@ class PatientProfileActivity: AppCompatActivity() {
 
     private lateinit var measurementsButton: Button
     private lateinit var patientMedicalStatusButton: Button
+    private lateinit var measurementsChartButton: Button
     private lateinit var measurementsViewModel: MeasurementsViewModel
     private lateinit var medicalStatusViewModel: MedicalStatusViewModel
     private lateinit var startMonitoringDate: String
@@ -34,6 +35,7 @@ class PatientProfileActivity: AppCompatActivity() {
 
         measurementsButton = findViewById(R.id.patient_measurements_button)
         patientMedicalStatusButton = findViewById(R.id.patient_status_button)
+        measurementsChartButton = findViewById(R.id.measurements_chart_button)
 
         measurementsViewModel = ViewModelProvider(this).get(MeasurementsViewModel::class.java)
         medicalStatusViewModel = ViewModelProvider(this).get(MedicalStatusViewModel::class.java)
@@ -44,6 +46,10 @@ class PatientProfileActivity: AppCompatActivity() {
 
         patientMedicalStatusButton.setOnClickListener {
             viewPatientMedicalStatus(patientId)
+        }
+
+        measurementsChartButton.setOnClickListener {
+            viewPatientMeasurementsChart(patientId)
         }
     }
 
@@ -105,6 +111,24 @@ class PatientProfileActivity: AppCompatActivity() {
                         "PatientMeasurements",
                         "Error fetching patient measurements: ${result.exception.message}")
                 }
+            }
+        }
+    }
+
+    private fun viewPatientMeasurementsChart(patientId: Int) {
+        measurementsViewModel.fetchPatientMeasurements(patientId)
+        measurementsViewModel.measurementsList.observe(this) { result ->
+            when (result) {
+                is Result.Success ->
+                {
+                    val intent: Intent = Intent(this, MeasurementsChartActivity::class.java)
+                    startActivity(intent)
+                }
+
+                is Result.Error ->
+                    Log.d(
+                        "PatientMeasurements",
+                        "Error fetching patient measurements: ${result.exception.message}")
             }
         }
     }
