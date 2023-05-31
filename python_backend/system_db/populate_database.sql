@@ -57,7 +57,7 @@ VALUES
 -- Diagnoses
 INSERT INTO Diagnoses (diagnosis, diagnosis_date)
 VALUES
-    ('Hipertensiune arterială', '2022-01-05'),
+    ('Hipertensiune arteriala', '2022-01-05'),
     ('Infarct miocardic', '2022-02-15'),
     ('Diabet zaharat', '2022-03-21'),
     ('Pneumonie', '2022-04-10');
@@ -87,5 +87,6 @@ VALUES
 INSERT INTO PatientsAllergies (patient_id, allergen)
 VALUES
     (1, 'Polen'),
+    (1, 'Acarieni'),
     (2, 'Acarieni'),
     (3, 'Lactoza');
