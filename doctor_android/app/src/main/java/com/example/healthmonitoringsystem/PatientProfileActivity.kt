@@ -11,12 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.healthmonitoringsystem.entities.PatientDetails
 import com.example.healthmonitoringsystem.common.Result
 import com.example.healthmonitoringsystem.viewmodel.MeasurementsViewModel
+import com.example.healthmonitoringsystem.viewmodel.MedicalStatusViewModel
 
 class PatientProfileActivity: AppCompatActivity() {
 
     private lateinit var measurementsButton: Button
     private lateinit var patientMedicalStatusButton: Button
     private lateinit var measurementsViewModel: MeasurementsViewModel
+    private lateinit var medicalStatusViewModel: MedicalStatusViewModel
     private lateinit var startMonitoringDate: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +34,7 @@ class PatientProfileActivity: AppCompatActivity() {
         patientMedicalStatusButton = findViewById(R.id.patient_status_button)
 
         measurementsViewModel = ViewModelProvider(this).get(MeasurementsViewModel::class.java)
-
+        medicalStatusViewModel = ViewModelProvider(this).get(MedicalStatusViewModel::class.java)
 
         measurementsButton.setOnClickListener {
             getPatientMeasurements(patientId)
@@ -56,6 +58,18 @@ class PatientProfileActivity: AppCompatActivity() {
 
     fun viewPatientMedicalStatus(patientId: Int) {
         Log.d("PatientProfileActivity", "Medical Status button pressed")
+
+        medicalStatusViewModel.getMedicalStatus(patientId).observe(this) { result ->
+
+            when (result) {
+                is Result.Success -> {
+                    Log.d("PatientMedicalStatus", result.data.toString())
+                }
+
+                is Result.Error ->
+                    Log.d("PatientMedicalStatus", "Error getting status ${result.exception}")
+            }
+        }
     }
 
 

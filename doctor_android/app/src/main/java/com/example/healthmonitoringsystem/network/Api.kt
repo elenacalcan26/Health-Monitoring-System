@@ -28,4 +28,9 @@ interface Api {
     fun getPatientMeasurements(
         @Path("id") patientId: Int
     ): Call<PatientMeasurementsResp>
+
+    @GET("/patients/{id}/status")
+    fun getPatientMedicalStatus(
+        @Path("id") patientId: Int
+    ): Call<PatientMedicalStatusResp>
 }
