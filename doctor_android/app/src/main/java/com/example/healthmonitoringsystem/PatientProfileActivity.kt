@@ -20,6 +20,7 @@ class PatientProfileActivity: AppCompatActivity() {
     private lateinit var measurementsViewModel: MeasurementsViewModel
     private lateinit var medicalStatusViewModel: MedicalStatusViewModel
     private lateinit var startMonitoringDate: String
+    private lateinit var patientFullName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,7 @@ class PatientProfileActivity: AppCompatActivity() {
         val details = intent.extras?.getParcelable<PatientDetails>("patientDetails")
         displayPatientInfo(details!!)
         startMonitoringDate = formatDate(details.monitoring_start_date)
+        patientFullName = details.full_name
 
         measurementsButton = findViewById(R.id.patient_measurements_button)
         patientMedicalStatusButton = findViewById(R.id.patient_status_button)
@@ -66,6 +68,7 @@ class PatientProfileActivity: AppCompatActivity() {
                     Log.d("PatientMedicalStatus", result.data.toString())
                     val intent: Intent = Intent(this, PatientMedicalStatusActivity::class.java).apply {
                         putExtra("patientStatus", result.data)
+                        putExtra("patientFullName", patientFullName)
                     }
                     startActivity(intent)
                 }

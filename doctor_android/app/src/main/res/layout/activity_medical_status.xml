@@ -17,7 +17,7 @@
         android:id="@+id/allergiesTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Alergeni:"
+        android:text="Allergens:"
         android:textStyle="bold"
         android:textSize="18sp"
         android:padding="16dp" />
@@ -34,7 +34,7 @@
         android:id="@+id/diagnosisTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Diagnostic:"
+        android:text="Diagnosis:"
         android:textStyle="bold"
         android:textSize="18sp"
         android:padding="16dp" />
@@ -50,7 +50,7 @@
         android:id="@+id/treatmentTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tratament:"
+        android:text="Treatment:"
         android:textStyle="bold"
         android:textSize="18sp"
         android:padding="16dp" />
