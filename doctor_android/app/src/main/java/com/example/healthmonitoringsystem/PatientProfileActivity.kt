@@ -64,6 +64,10 @@ class PatientProfileActivity: AppCompatActivity() {
             when (result) {
                 is Result.Success -> {
                     Log.d("PatientMedicalStatus", result.data.toString())
+                    val intent: Intent = Intent(this, PatientMedicalStatusActivity::class.java).apply {
+                        putExtra("patientStatus", result.data)
+                    }
+                    startActivity(intent)
                 }
 
                 is Result.Error ->
