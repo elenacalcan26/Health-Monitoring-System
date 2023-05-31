@@ -80,3 +80,40 @@ def get_patient_device(patient_id):
     device = result["device_id"]
     print(f"Patient with ID = {patient_id} has device = {device}", flush=True)
     return str(device)
+
+def get_patient_diagnose(patient_id):
+    query = f"""SELECT
+                    d.diagnosis,
+                    d.diagnosis_date
+                FROM Diagnoses d
+                JOIN Patients p on p.diagnosis_id = d.id
+                WHERE p.id = {patient_id};"""
+    mysql_db_cursor.execute(query)
+    result = mysql_db_cursor.fetchone()
+    print(f"Diagnose: {result}", flush=True)
+    return result
+
+
+def get_patient_treatment(patient_id):
+    query = f"""SELECT
+                    t.treatment AS treatment_name,
+                    t.start_date,
+                    m.name AS medication_name,
+                    m.dosage,
+                    m.frequency
+                FROM Treatments t
+                JOIN Patients p on p.treatment_id = t.id
+                JOIN Medications m on m.treatment_id = t.id
+                WHERE p.id = {patient_id};"""
+    mysql_db_cursor.execute(query)
+    result = mysql_db_cursor.fetchone()
+    print(f"Treatments: {result}", flush=True)
+    return result
+
+
+def get_patient_allergies(patient_id):
+    query = f"""SELECT allergen from PatientsAllergies WHERE patient_id = {patient_id};"""
+    mysql_db_cursor.execute(query)
+    result = mysql_db_cursor.fetchall()
+    print(f"Allergies: {result}", flush=True)
+    return result

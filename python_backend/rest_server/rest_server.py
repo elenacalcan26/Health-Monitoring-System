@@ -5,6 +5,15 @@ from influxdb_client import *
 
 app = Flask(__name__)
 
+@app.route("/patients/<int:patientId>/status", methods=["GET"])
+def get_patient_medical_status(patientId):
+    validted_response = validate_req(request=request)
+    patient_status = {}
+    patient_status["diagnose"] = get_patient_diagnose(patientId)
+    patient_status["treatment"] = get_patient_treatment(patientId)
+    patient_status["allergies"] =  get_patient_allergies(patientId)
+    return {"status": patient_status}, 200
+
 @app.route("/patients/<int:patientId>/measurements", methods=["GET"])
 def get_patient_all_measurements(patientId):
     validated_response = validate_req(request=request)
