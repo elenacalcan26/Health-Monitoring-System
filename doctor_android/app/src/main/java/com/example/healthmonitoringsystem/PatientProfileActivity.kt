@@ -15,6 +15,7 @@ import com.example.healthmonitoringsystem.viewmodel.MeasurementsViewModel
 class PatientProfileActivity: AppCompatActivity() {
 
     private lateinit var measurementsButton: Button
+    private lateinit var patientMedicalStatusButton: Button
     private lateinit var measurementsViewModel: MeasurementsViewModel
     private lateinit var startMonitoringDate: String
 
@@ -28,12 +29,17 @@ class PatientProfileActivity: AppCompatActivity() {
         startMonitoringDate = formatDate(details.monitoring_start_date)
 
         measurementsButton = findViewById(R.id.patient_measurements_button)
+        patientMedicalStatusButton = findViewById(R.id.patient_status_button)
 
         measurementsViewModel = ViewModelProvider(this).get(MeasurementsViewModel::class.java)
 
 
         measurementsButton.setOnClickListener {
             getPatientMeasurements(patientId)
+        }
+
+        patientMedicalStatusButton.setOnClickListener {
+            viewPatientMedicalStatus(patientId)
         }
     }
 
@@ -47,6 +53,11 @@ class PatientProfileActivity: AppCompatActivity() {
         patientGender.text = "Gender: ${patientDetails.gender}"
         patientAssignedDevice.text = "Device: ${patientDetails.device_id}"
     }
+
+    fun viewPatientMedicalStatus(patientId: Int) {
+        Log.d("PatientProfileActivity", "Medical Status button pressed")
+    }
+
 
     fun getPatientMeasurements(patientId: Int) {
         Log.d("PatientProfileActivity", "Measurements button pressed")

@@ -62,7 +62,7 @@
         android:id="@+id/patient_measurements_button"
         android:layout_width="277dp"
         android:layout_height="69dp"
-        android:layout_marginBottom="109dp"
+        android:layout_marginBottom="70dp"
         android:onClick="viewPatientMeasurements"
         android:text="View Patient Measurements"
         android:textColor="@color/white"
@@ -70,4 +70,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <Button
+        android:id="@+id/patient_status_button"
+        android:layout_width="277dp"
+        android:layout_height="69dp"
+        android:onClick="viewPatientMedicalStatus"
+        android:text="VIEW MEDICAL STATUS"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/patient_measurements_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/patient_device" />
 </androidx.constraintlayout.widget.ConstraintLayout>
