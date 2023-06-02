@@ -121,7 +121,11 @@ class PatientProfileActivity: AppCompatActivity() {
             when (result) {
                 is Result.Success ->
                 {
-                    val intent: Intent = Intent(this, MeasurementsChartActivity::class.java)
+                    val intent = result.data?.takeIf { it.isNotEmpty() }?.let { data ->
+                        Intent(this, MeasurementsChartActivity::class.java).apply {
+                            putParcelableArrayListExtra("measurementsList", ArrayList(data))
+                        }
+                    } ?: Intent(this, NoDataMeasuredMessageActivity::class.java)
                     startActivity(intent)
                 }
 
