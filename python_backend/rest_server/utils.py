@@ -1,5 +1,4 @@
 import requests
-import json
 
 AUTH_SERVICE_URL = "http://auth-server:5000"
 
@@ -11,9 +10,4 @@ def validate_req(request):
         headers={"Authorization": token},
     )
 
-    if res.status_code != 200:
-        return None
-
-    response_content = json.loads(res.content)
-
-    return response_content
+    return res

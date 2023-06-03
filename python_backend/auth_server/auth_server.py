@@ -2,6 +2,7 @@ from flask import Flask, request, Response, jsonify, make_response
 from auth_db_client import *
 import jwt
 from functools import wraps
+import json
 
 auth_app = Flask(__name__)
 auth_app.config["SECRET_KEY"] = "super secret key"
@@ -40,7 +41,7 @@ def validate():
             {"message": "Not Authorized"}
         ), 403
 
-    return (decoded, 200)
+    return json.dumps(decoded), 200
 
 if __name__ == '__main__':
     auth_app.run('0.0.0.0', port=5000, debug=True)
