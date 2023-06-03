@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS Patients
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     person_id INTEGER NOT NULL,
     doctor_id VARCHAR(30) NOT NULL,
-    device_id VARCHAR(20) NOT NULL,
+    device_id VARCHAR(30) NOT NULL,
     monitoring_start_date DATE,
     diagnosis_id INTEGER NOT NULL,
     treatment_id INTEGER NOT NULL,
