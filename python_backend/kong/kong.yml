@@ -2,12 +2,12 @@ _format_version: "2.1"
 
 services:
   - name: auth-server
-    url: http://auth-server:5000/login
+    url: http://auth-server:5000
 
     routes:
       - name: auth-route
         paths:
-          - /login
+          - /auth/*
         methods:
           - POST
         service:
@@ -17,8 +17,11 @@ services:
     url: http://rest-server:6000
 
     routes:
-      - name: rest-route
+      - name: business-logic
         paths:
-          - /
+          - /business-logic/*
         methods:
           - GET
+        service:
+        name: rest-server
+

@@ -7,29 +7,29 @@ import retrofit2.http.*
 interface Api {
 
     @FormUrlEncoded
-    @POST("login")
+    @POST("/auth/login")
     fun loginUser(
         @Field("username") username:String,
         @Field("password") password:String,
     ): Call<DefResp>
 
-    @GET("profile")
+    @GET("/business-logic/profile")
     fun getDocProfile(): Call<DocProfileResp>
 
-    @GET("/patients")
+    @GET("/business-logic/patients")
     fun getPatients(): Call<List<PatientResp>>
 
-    @GET("/patients/{id}")
+    @GET("/business-logic/patients/{id}")
     fun getPatientDetails(
         @Path("id") patientId: Int
     ): Call<PatientDetailsResp>
 
-    @GET("/patients/{id}/measurements")
+    @GET("/business-logic/patients/{id}/measurements")
     fun getPatientMeasurements(
         @Path("id") patientId: Int
     ): Call<PatientMeasurementsResp>
 
-    @GET("/patients/{id}/status")
+    @GET("/business-logic/patients/{id}/status")
     fun getPatientMedicalStatus(
         @Path("id") patientId: Int
     ): Call<PatientMedicalStatusResp>
