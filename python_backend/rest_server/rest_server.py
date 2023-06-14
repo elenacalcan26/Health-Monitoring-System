@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from db_client import *
 from utils import *
-from influxdb_client import *
 import json
 
 app = Flask(__name__)
@@ -28,9 +27,11 @@ def get_patient_all_measurements(patientId):
 
     patient_device = get_patient_device(patientId)
     start_date = get_patient_start_measurement_date(patientId)
-    # TODO check not empty
-    result = get_all_measurements(patient_device, start_date)
-    return result, 200
+
+    measurements = get_patient_measurements(patient_device, start_date)
+    print(f"in measurements url -> {measurements}", flush=True)
+
+    return measurements, 200, {"Content-Type": "application/json"}
 
 @app.route("/patients/<int:patientId>", methods=["GET"])
 def get_patient_profile(patientId):
