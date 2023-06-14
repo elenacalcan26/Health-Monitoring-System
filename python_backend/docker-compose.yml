@@ -62,6 +62,17 @@ services:
       - mysql-gui
       - mysql-auth-gui
 
+  influx-client-server:
+    image: influx-client-server
+    build: ./influxdb_client_server
+    restart: always
+    container_name: influx-client-server
+    depends_on:
+      - influxdb
+    networks:
+      - influx-business-netwrok
+      - influxdb-rest-network
+
   rest-server:
     image: rest-server
     build: ./rest_server
@@ -69,10 +80,9 @@ services:
     container_name: rest-server
     depends_on:
       - mysql
-      - influxdb
     networks:
       - mysql-rest-network
-      - influxdb-rest-network
+      - influx-business-netwrok
       - auth-rest-network
       - internal
 
@@ -113,6 +123,7 @@ networks:
   mysql-auth-gui:
   mysql-auth-network:
   auth-rest-network:
+  influx-business-netwrok:
   internal:
 
 volumes:

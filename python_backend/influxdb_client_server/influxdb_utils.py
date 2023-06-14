@@ -1,11 +1,11 @@
 from influxdb import InfluxDBClient
 from datetime import datetime, date
+import dateutil.parser as parser
 
 INFLUX_DATABASE = "patients_measurements"
 
-influxClient = InfluxDBClient("influxdb", 8086)
-
-influxClient.switch_database(INFLUX_DATABASE)
+influx_client = InfluxDBClient("influxdb", 8086)
+influx_client.switch_database(INFLUX_DATABASE)
 
 patient_measurements = {}
 
@@ -15,7 +15,7 @@ def query_measurement_from_influx(measurement, start_date, device):
                 WHERE time >= '{start_date}' and time < NOW() and device_id = '{device}'
                 GROUP BY time(10m);
             """
-    return influxClient.query(query)
+    return influx_client.query(query)
 
 def get_all_measurements(device_name, start_measurement_date):
     global patient_measurements
@@ -24,7 +24,8 @@ def get_all_measurements(device_name, start_measurement_date):
         # clears measurements buffer before every query / api
         patient_measurements = {}
 
-    start_measurement_date = datetime.combine(start_measurement_date, datetime.min.time())
+    start_measurement_date = parser.parse(start_measurement_date)
+    # start_measurement_date = datetime.combine(start_measurement_date, datetime.min.time())
     date_time_iso = start_measurement_date.isoformat() + 'Z'
 
     result = query_measurement_from_influx("spo2", date_time_iso, device_name)
